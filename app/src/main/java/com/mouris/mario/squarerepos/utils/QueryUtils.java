@@ -110,10 +110,12 @@ public class QueryUtils {
                 JSONObject jsonRepoObject = jsonRepoArray.getJSONObject(i);
                 String name = jsonRepoObject.getString("name");
                 String description = jsonRepoObject.getString("description");
-                String url = jsonRepoObject.getString("url");
+                String url = jsonRepoObject.getString("html_url");
                 String owner_name = jsonRepoObject.getJSONObject("owner").getString("login");
+                String owner_url = jsonRepoObject.getJSONObject("owner").getString("html_url");
+                boolean fork = jsonRepoObject.getBoolean("fork");
 
-                reposList.add(new Repo(name, description, url, owner_name));
+                reposList.add(new Repo(name, description, url, owner_name, owner_url, fork));
             }
         } catch (JSONException e) {
             e.printStackTrace();

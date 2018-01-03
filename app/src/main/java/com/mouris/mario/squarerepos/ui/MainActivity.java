@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Repo>> loader, List<Repo> repos) {
-        
+
     }
 
     @Override
