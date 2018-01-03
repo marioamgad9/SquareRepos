@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QueryUtils {
+class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     private static final String REQUEST_URL = "https://api.github.com/users/square/repos";

@@ -2,11 +2,9 @@ package com.mouris.mario.squarerepos.ui;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,7 +20,7 @@ import java.util.List;
 
 public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoViewHolder> {
 
-    List<Repo> reposList;
+    private List<Repo> reposList;
 
     ReposRVAdapter(List<Repo> reposList) {
         this.reposList = reposList;
@@ -79,12 +77,9 @@ public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoView
                 cardView.setCardBackgroundColor(Color.WHITE);
             }
 
-            cardView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    showGoToDialog(v.getContext(), repo);
-                    return false;
-                }
+            cardView.setOnLongClickListener(v -> {
+                showGoToDialog(v.getContext(), repo);
+                return false;
             });
         }
 
@@ -93,17 +88,14 @@ public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoView
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setCancelable(true);
             builder.setTitle("Go to:");
-            builder.setItems(options, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    if (which == 0) {
-                        intent.setData(Uri.parse(repo.owner_url));
-                    } else {
-                        intent.setData(Uri.parse(repo.url));
-                    }
-                    context.startActivity(intent);
+            builder.setItems(options, (dialog, which) -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                if (which == 0) {
+                    intent.setData(Uri.parse(repo.owner_url));
+                } else {
+                    intent.setData(Uri.parse(repo.url));
                 }
+                context.startActivity(intent);
             });
             builder.show();
         }

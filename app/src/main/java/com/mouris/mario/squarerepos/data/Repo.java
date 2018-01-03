@@ -1,6 +1,14 @@
 package com.mouris.mario.squarerepos.data;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
+@Entity(tableName = "Repositories")
 public class Repo {
+
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
     public String name;
     public String description;
     public String owner_name;
