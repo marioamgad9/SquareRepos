@@ -1,5 +1,7 @@
 package com.mouris.mario.squarerepos.ui;
 
+import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,8 +33,7 @@ public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoView
     public void onBindViewHolder(RepoViewHolder repoViewHolder, int position) {
         Repo repoItem = reposList.get(position);
 
-        repoViewHolder.repoNameTextView.setText(repoItem.name);
-        repoViewHolder.ownerNameTextView.setText(repoItem.owner_name);
+        repoViewHolder.bindData(repoItem);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoView
         return reposList.size();
     }
 
-    public void setReposList(List<Repo> reposList) {
+    void setReposList(List<Repo> reposList) {
         this.reposList = reposList;
         notifyDataSetChanged();
     }
@@ -57,6 +58,17 @@ public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoView
             cardView = itemView.findViewById(R.id.item_cardView);
             repoNameTextView = itemView.findViewById(R.id.item_title);
             ownerNameTextView = itemView.findViewById(R.id.item_owner);
+        }
+
+        void bindData(Repo repo) {
+            repoNameTextView.setText(repo.name);
+            ownerNameTextView.setText(repo.owner_name);
+            if (repo.fork) {
+                cardView.setCardBackgroundColor(
+                        cardView.getContext().getResources().getColor(R.color.lightGreen));
+            } else {
+                cardView.setCardBackgroundColor(Color.WHITE);
+            }
         }
     }
 
