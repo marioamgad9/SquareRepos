@@ -58,17 +58,20 @@ public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoView
         CardView cardView;
         TextView repoNameTextView;
         TextView ownerNameTextView;
+        TextView descriptionTextView;
 
         RepoViewHolder(View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.item_cardView);
             repoNameTextView = itemView.findViewById(R.id.item_title);
             ownerNameTextView = itemView.findViewById(R.id.item_owner);
+            descriptionTextView = itemView.findViewById(R.id.item_description);
         }
 
         void bindData(final Repo repo) {
             repoNameTextView.setText(repo.name);
             ownerNameTextView.setText(repo.owner_name);
+            descriptionTextView.setText(repo.description);
             if (repo.fork) {
                 cardView.setCardBackgroundColor(
                         cardView.getContext().getResources().getColor(R.color.lightGreen));
