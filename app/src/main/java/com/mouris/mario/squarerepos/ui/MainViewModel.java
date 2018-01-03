@@ -23,15 +23,15 @@ public class MainViewModel extends AndroidViewModel{
         mRepository = DataRepository.getInstance(dao);
     }
 
-    public LiveData<List<Repo>> getRepos() {
+    LiveData<List<Repo>> getRepos() {
         return mRepository.getRepos();
     }
 
-    public void insertRepos(List<Repo> reposList) {
+    void insertRepos(List<Repo> reposList) {
         mRepository.insertRepos(reposList);
     }
 
-    public void deleteAllRepos() {
+    void deleteAllRepos() {
         mRepository.deleteRepos();
     }
 

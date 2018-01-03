@@ -11,7 +11,7 @@ public abstract class ReposDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "Repositories.db";
 
-    static volatile ReposDatabase sInstance;
+    private static volatile ReposDatabase sInstance;
 
     public static ReposDatabase getInstance(Context context) {
         if (sInstance == null) {
