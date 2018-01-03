@@ -1,6 +1,11 @@
 package com.mouris.mario.squarerepos.ui;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +20,7 @@ import com.mouris.mario.squarerepos.data.Repo;
 import java.util.List;
 
 
-public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoViewHolder>{
+public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoViewHolder> {
 
     List<Repo> reposList;
 
@@ -47,6 +52,7 @@ public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoView
         notifyDataSetChanged();
     }
 
+
     static class RepoViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
@@ -60,7 +66,7 @@ public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoView
             ownerNameTextView = itemView.findViewById(R.id.item_owner);
         }
 
-        void bindData(Repo repo) {
+        void bindData(final Repo repo) {
             repoNameTextView.setText(repo.name);
             ownerNameTextView.setText(repo.owner_name);
             if (repo.fork) {
@@ -69,7 +75,34 @@ public class ReposRVAdapter extends RecyclerView.Adapter<ReposRVAdapter.RepoView
             } else {
                 cardView.setCardBackgroundColor(Color.WHITE);
             }
+
+            cardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    showGoToDialog(v.getContext(), repo);
+                    return false;
+                }
+            });
+        }
+
+        private void showGoToDialog(final Context context, final Repo repo) {
+            CharSequence options[] = new CharSequence[]{"Go to Owner page", "Go to Repository page"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setCancelable(true);
+            builder.setTitle("Go to:");
+            builder.setItems(options, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    if (which == 0) {
+                        intent.setData(Uri.parse(repo.owner_url));
+                    } else {
+                        intent.setData(Uri.parse(repo.url));
+                    }
+                    context.startActivity(intent);
+                }
+            });
+            builder.show();
         }
     }
-
 }
