@@ -4,7 +4,8 @@ import android.app.LoaderManager;
 import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.mouris.mario.squarerepos.R;
 import com.mouris.mario.squarerepos.data.Repo;
@@ -17,12 +18,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int LOADER_ID = 1;
 
+    private ReposRVAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         getLoaderManager().initLoader(LOADER_ID, null, this);
+
+        RecyclerView recyclerView = findViewById(R.id.main_recyclerView);
+        mAdapter = new ReposRVAdapter(null);
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
     }
 
     @Override
@@ -32,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<Repo>> loader, List<Repo> repos) {
-
+        mAdapter.setReposList(repos);
     }
 
     @Override
