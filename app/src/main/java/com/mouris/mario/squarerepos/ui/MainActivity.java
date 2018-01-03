@@ -29,7 +29,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
 
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mViewModel.getRepos().observe(this, repoList -> mAdapter.setReposList(repoList));
+        mViewModel.getRepos().observe(this, repoList -> {
+            mAdapter.setReposList(repoList);
+            if (repoList.size() == 0) {
+                getLoaderManager().initLoader(LOADER_ID, null, this);
+                mSwipeRefreshLayout.setRefreshing(true);
+            }
+        });
 
         RecyclerView recyclerView = findViewById(R.id.main_recyclerView);
         mAdapter = new ReposRVAdapter(null);
