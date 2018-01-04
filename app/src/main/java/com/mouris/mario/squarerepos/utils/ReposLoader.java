@@ -9,8 +9,11 @@ import java.util.List;
 
 public class ReposLoader extends AsyncTaskLoader<List<Repo>>{
 
-    public ReposLoader(Context context) {
+    private int page;
+
+    public ReposLoader(Context context, int page) {
         super(context);
+        this.page = page;
     }
 
     @Override
@@ -20,6 +23,10 @@ public class ReposLoader extends AsyncTaskLoader<List<Repo>>{
 
     @Override
     public List<Repo> loadInBackground() {
-        return QueryUtils.fetchReposData();
+        return QueryUtils.fetchReposData(page);
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }

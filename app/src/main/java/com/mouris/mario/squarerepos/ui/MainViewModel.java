@@ -15,6 +15,7 @@ import java.util.List;
 public class MainViewModel extends AndroidViewModel{
 
     private DataRepository mRepository;
+    int currentPage = 1;
 
     public MainViewModel(@NonNull Application application) {
         super(application);

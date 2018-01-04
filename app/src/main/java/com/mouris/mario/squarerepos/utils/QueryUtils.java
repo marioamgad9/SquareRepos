@@ -21,14 +21,17 @@ import java.util.List;
 class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
-    private static final String REQUEST_URL = "https://api.github.com/users/square/repos";
+    private static final int ITEM_PER_PAGE = 10;
 
     //A private constructor to prevent initiating the class
     private QueryUtils() {
     }
 
-    static List<Repo> fetchReposData() {
-        URL url = createUrl(REQUEST_URL);
+    static List<Repo> fetchReposData(int page) {
+        String request_url = "https://api.github.com/users/square/repos";
+        String query = "?page=" + page + "&per_page=" + ITEM_PER_PAGE;
+
+        URL url = createUrl(request_url + query);
 
         String jsonResponse = null;
         try {
